@@ -1,0 +1,13 @@
+.teacher-advanced-page .card {
+  border: 1px solid #e6e1d7;
+}
+
+.teacher-advanced-page .card-header {
+  font-weight: 600;
+}
+
+.teacher-scroll-list {
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
