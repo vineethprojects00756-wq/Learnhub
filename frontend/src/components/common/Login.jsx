@@ -28,8 +28,13 @@ const Login = () => {
   const completeLogin = (payload) => {
     localStorage.setItem('token', payload.token);
     localStorage.setItem('user', JSON.stringify(payload.userData));
+    const role = (payload.userData?.type || '').toLowerCase();
+    let target = '/dashboard';
+    if (role === 'teacher') {
+      target = '/dashboard?view=teacher-advanced';
+    }
     setTimeout(() => {
-      navigate('/dashboard');
+      navigate(target);
       window.location.reload();
     }, 500);
   };
