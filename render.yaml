@@ -29,7 +29,7 @@ services:
       - key: AWS_S3_BUCKET
         sync: false
 
-  - type: static
+  - type: static_site
     name: learnhub-frontend
     env: static
     rootDir: frontend
