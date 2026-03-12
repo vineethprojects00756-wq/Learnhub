@@ -39,7 +39,7 @@ const AddCourse = ({ setSelectedComponent }) => {
                   C_educator: course.C_educator || '',
                   C_title: course.C_title || '',
                   C_categories: course.C_categories || '',
-                  C_price: course.C_price === 'free' + 0 : course.C_price || '',
+                  C_price: course.C_price === 'free' ? 0 : course.C_price || '',
                   C_description: course.C_description || '',
                   sections,
                });
