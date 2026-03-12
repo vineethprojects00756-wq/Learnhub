@@ -144,7 +144,7 @@ const AddCourse = ({ setSelectedComponent }) => {
             // ...existing code...
          }
       } catch (error) {
-         alert(error+.response+.data+.message || 'Failed to submit course. Please try again.');
+         alert(error?.response?.data?.message || 'Failed to submit course. Please try again.');
       } finally {
          setLoading(false);
       }
