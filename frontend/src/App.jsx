@@ -16,27 +16,23 @@ import ForgotPassword from "./components/common/ForgotPassword";
 export const UserContext = createContext();
 
 function App() {
-  const [userData, setUserData] = useState();
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
-
-  const getData = async () => {
+  const [userData, setUserData] = useState(() => {
     try {
-      const user = await JSON.parse(localStorage.getItem("user"));
-      if (user && user !== undefined) {
-        setUserData(user);
-        setUserLoggedIn(true);
-      }
-    } catch (error) {
-      // ...existing code...
+      return JSON.parse(localStorage.getItem("user") || "null");
+    } catch {
+      return null;
     }
-  };
+  });
+  const [userLoggedIn, setUserLoggedIn] = useState(() =>
+    Boolean(localStorage.getItem("user") || localStorage.getItem("token"))
+  );
 
   useEffect(() => {
-    getData();
-  }, []);
+    setUserLoggedIn(Boolean(userData || localStorage.getItem("token")));
+  }, [userData]);
 
   return (
-    <UserContext.Provider value={{ userData, userLoggedIn }}>
+    <UserContext.Provider value={{ userData, userLoggedIn, setUserData, setUserLoggedIn }}>
       <div className="App">
         <Router>
           <div className="content">

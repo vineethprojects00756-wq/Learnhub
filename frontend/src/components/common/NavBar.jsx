@@ -7,6 +7,7 @@ import { getRealtimeSocket } from '../../utils/realtimeSocket';
 
 const NavBar = ({ setSelectedComponent }) => {
   const user = useContext(UserContext)
+  const { setUserData, setUserLoggedIn } = user || {};
   const navigate = useNavigate();
   const role = (user?.userData?.type || '').toLowerCase();
   const isLearnerOrTeacher = role === 'teacher' || role === 'student';
@@ -17,7 +18,13 @@ const NavBar = ({ setSelectedComponent }) => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    window.location.href = '/';
+    if (typeof setUserData === 'function') {
+      setUserData(null);
+    }
+    if (typeof setUserLoggedIn === 'function') {
+      setUserLoggedIn(false);
+    }
+    navigate('/');
   }
 
   const handleOptionClick = (component) => {

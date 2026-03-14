@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import { Container, Nav } from 'react-bootstrap';
@@ -10,9 +10,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import axiosInstance from './AxiosInstance';
 import { motion } from 'framer-motion';
+import { UserContext } from '../../App';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUserData, setUserLoggedIn } = useContext(UserContext) || {};
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -28,6 +30,12 @@ const Login = () => {
   const completeLogin = (payload) => {
     localStorage.setItem('token', payload.token);
     localStorage.setItem('user', JSON.stringify(payload.userData));
+    if (typeof setUserData === 'function') {
+      setUserData(payload.userData || null);
+    }
+    if (typeof setUserLoggedIn === 'function') {
+      setUserLoggedIn(true);
+    }
     const role = (payload.userData?.type || '').toLowerCase();
     let target = '/dashboard';
     if (role === 'teacher') {
